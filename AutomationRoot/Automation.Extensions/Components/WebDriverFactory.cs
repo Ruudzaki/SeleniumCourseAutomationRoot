@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Automation.Extensions.Contracts;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -15,14 +13,14 @@ namespace Automation.Extensions.Components
     public class WebDriverFactory
     {
 
-        private readonly DriverParams driverParams;
+        private readonly DriverParams _driverParams;
 
         public WebDriverFactory(string driverParamsJson) 
             : this(LoadParams(driverParamsJson)) { }
 
         public WebDriverFactory(DriverParams driverParams)
         {
-            this.driverParams = driverParams;
+            this._driverParams = driverParams;
             if (string.IsNullOrEmpty(driverParams.Binaries) || driverParams.Binaries == ".")
             {
                 driverParams.Binaries = Environment.CurrentDirectory;
@@ -36,7 +34,7 @@ namespace Automation.Extensions.Components
         /// <returns>web-driver instance</returns>
         public IWebDriver Get()
         {
-            if (!string.Equals(driverParams.Source, "REMOTE", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(_driverParams.Source, "REMOTE", StringComparison.OrdinalIgnoreCase))
             {
                 return GetDriver();
             }
@@ -45,14 +43,14 @@ namespace Automation.Extensions.Components
         }
 
         // local web-drivers
-        private IWebDriver GetChrome() => new ChromeDriver(driverParams.Binaries);
-        private IWebDriver GetFireFox() => new FirefoxDriver(driverParams.Binaries);
-        private IWebDriver GetInternetExplorer() => new InternetExplorerDriver(driverParams.Binaries);
-        private IWebDriver GetEdge() => new EdgeDriver(driverParams.Binaries);
+        private IWebDriver GetChrome() => new ChromeDriver(_driverParams.Binaries);
+        private IWebDriver GetFireFox() => new FirefoxDriver(_driverParams.Binaries);
+        private IWebDriver GetInternetExplorer() => new InternetExplorerDriver(_driverParams.Binaries);
+        private IWebDriver GetEdge() => new EdgeDriver(_driverParams.Binaries);
 
         private IWebDriver GetDriver()
         {
-            switch (driverParams.Driver.ToUpper())
+            switch (_driverParams.Driver.ToUpper())
             {
                 case "EDGE": return GetEdge();
                 case "IE": return GetInternetExplorer();
@@ -64,17 +62,17 @@ namespace Automation.Extensions.Components
 
         // remote web-drivers
         private IWebDriver GetRemoteChrome() 
-            => new RemoteWebDriver(new Uri(driverParams.Binaries), new ChromeOptions());
+            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new ChromeOptions());
         private IWebDriver GetRemoteFireFox() 
-            => new RemoteWebDriver(new Uri(driverParams.Binaries), new FirefoxOptions());
+            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new FirefoxOptions());
         private IWebDriver GetRemoteInternetExplorer() 
-            => new RemoteWebDriver(new Uri(driverParams.Binaries), new InternetExplorerOptions());
+            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new InternetExplorerOptions());
         private IWebDriver GetRemoteEdge() 
-            => new RemoteWebDriver(new Uri(driverParams.Binaries), new EdgeOptions());
+            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new EdgeOptions());
 
         private IWebDriver GetRemoteDriver()
         {
-            switch (driverParams.Driver.ToUpper())
+            switch (_driverParams.Driver.ToUpper())
             {
                 case "EDGE": return GetRemoteEdge();
                 case "IE": return GetRemoteInternetExplorer();
