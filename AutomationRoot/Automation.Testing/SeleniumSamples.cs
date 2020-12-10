@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Automation.Extensions.Components;
+using Automation.Extensions.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -37,7 +39,7 @@ namespace Automation.Testing
         {
             var driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            
+
             driver.Navigate().GoToUrl("https://gravitymvctestapplication.azurewebsites.net/");
             driver.FindElement(By.XPath("//a[.='Students']")).Click();
             Thread.Sleep(2000);
@@ -55,6 +57,18 @@ namespace Automation.Testing
             var selectElement = new SelectElement(element);
             selectElement.SelectByValue("4");
             driver.FindElement(By.XPath("//input[@value='Filter']")).Click();
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void WebDriverFactorySample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = "chrome", Binaries = @"E:\Projects\automation-env" } ).Get();
+            driver.Manage().Window.Maximize();
+
+            driver.Navigate().GoToUrl("https://gravitymvctestapplication.azurewebsites.net/");
+            driver.FindElement(By.XPath("//a[.='Students']")).Click();
             Thread.Sleep(2000);
             driver.Dispose();
         }

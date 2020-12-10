@@ -13,6 +13,7 @@ namespace Automation.Extensions.Components
     public class WebDriverFactory
     {
 
+
         private readonly DriverParams _driverParams;
 
         public WebDriverFactory(string driverParamsJson) 
@@ -47,6 +48,7 @@ namespace Automation.Extensions.Components
         private IWebDriver GetFireFox() => new FirefoxDriver(_driverParams.Binaries);
         private IWebDriver GetInternetExplorer() => new InternetExplorerDriver(_driverParams.Binaries);
         private IWebDriver GetEdge() => new EdgeDriver(_driverParams.Binaries);
+        
 
         private IWebDriver GetDriver()
         {
