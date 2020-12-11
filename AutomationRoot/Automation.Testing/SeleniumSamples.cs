@@ -64,7 +64,7 @@ namespace Automation.Testing
         [TestMethod]
         public void WebDriverFactorySample()
         {
-            var driver = new WebDriverFactory(new DriverParams { Driver = "chrome", Binaries = @"E:\Projects\automation-env" } ).Get();
+            var driver = new WebDriverFactory(new DriverParams { Driver = "edge", Binaries = @"E:\Projects\automation-env" } ).Get();
             driver.Manage().Window.Maximize();
 
             driver.Navigate().GoToUrl("https://gravitymvctestapplication.azurewebsites.net/");
@@ -73,5 +73,49 @@ namespace Automation.Testing
             driver.Dispose();
         }
 
+        [TestMethod]
+        public void GoToUrlSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = "chrome", Binaries = @"E:\Projects\automation-env" }).Get();
+
+            driver.GoToUrl("https://gravitymvctestapplication.azurewebsites.net/");
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetElementSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = "chrome", Binaries = @"E:\Projects\automation-env" }).Get();
+            driver.Manage().Window.Maximize();
+
+            driver.Navigate().GoToUrl("https://gravitymvctestapplication.azurewebsites.net/");
+            driver.GetElement(By.XPath("//a[.='Students']")).Click();
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void AsSelectSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = "chrome", Binaries = @"E:\Projects\automation-env" }).Get();
+            driver.Manage().Window.Maximize();
+
+            driver.Navigate().GoToUrl("https://gravitymvctestapplication.azurewebsites.net/Course/");
+            driver.FindElement(By.XPath("//select[@id='SelectedDepartment']")).AsSelect().SelectByValue("4");
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
+
+        [TestMethod]
+        public void GetElementsSample()
+        {
+            var driver = new WebDriverFactory(new DriverParams { Driver = "chrome", Binaries = @"E:\Projects\automation-env" }).Get();
+
+            driver.GoToUrl("https://gravitymvctestapplication.azurewebsites.net/");
+            var elements = driver.GetElements(By.XPath("//ul/li"));
+            Thread.Sleep(2000);
+            driver.Dispose();
+        }
     }
 }
