@@ -2,7 +2,7 @@
 
 namespace Automation.Core.Logging
 {
-    interface ILogger
+    public interface ILogger
     {
         void Debug(string message);
         void Debug(string format, params object[] args);
