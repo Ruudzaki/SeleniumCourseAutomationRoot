@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Automation.Core.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Automation.Core.Testing
 {
@@ -14,13 +12,49 @@ namespace Automation.Core.Testing
         private int _attempts;
         private ILogger _logger;
 
+        protected TestCase()
+        {
+            _testParams = new Dictionary<string, object>();
+            _attempts = 1;
+            _logger = new TraceLogger();
+        }
+
         // components
         public abstract bool AutomationTest(IDictionary<string, object> testParams);
 
         public TestCase Execute()
         {
+            for (int i = 0; i < _attempts; i++)
+            {
+                try
+                {
+                    Actual = AutomationTest(_testParams);
+                    if (Actual)
+                    {
+                        break;
+                    }
+                    _logger.Debug($"{GetType()?.FullName} failed on attempt [{i + 1}]");
+                }
+                catch (NotImplementedException ex)
+                {
+                    _logger.Debug(ex, ex.Message);
+                    break;
+                }
+                catch (AssertInconclusiveException ex)
+                {
+                    _logger.Debug(ex, ex.Message);
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Debug(ex, ex.Message);
+                }
+            }
             return this;
         }
+
+        // properties
+        public bool Actual { get; private set; }
 
         // configuration
         public TestCase WithTestParams(IDictionary<string, object> testParams)
