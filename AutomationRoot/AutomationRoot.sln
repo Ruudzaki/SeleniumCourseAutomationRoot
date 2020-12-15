@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Extensions", "Automation.Extensions\Automation.Extensions.csproj", "{9238C344-9619-4ECE-97D2-43C971F77FC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Automation.Extensions", "Automation.Extensions\Automation.Extensions.csproj", "{9238C344-9619-4ECE-97D2-43C971F77FC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Testing", "Automation.Testing\Automation.Testing.csproj", "{B9200D12-884E-43F0-B365-57917447071A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Automation.Testing", "Automation.Testing\Automation.Testing.csproj", "{B9200D12-884E-43F0-B365-57917447071A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Core", "Automation.Core\Automation.Core.csproj", "{3F0774AC-476A-4359-97EA-CFAD79F8FC92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Api", "Automation.Api\Automation.Api.csproj", "{3B0964A7-F46A-4164-82C9-FF4FB4CA4213}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Framework.Ui", "Automation.Framework.Ui\Automation.Framework.Ui.csproj", "{83B942E5-535A-4C07-A5E5-55012BB3A847}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automation.Framework.RestApi", "Automation.Framework.RestApi\Automation.Framework.RestApi.csproj", "{CF80A9E2-B83D-444F-8CAF-DF074840701E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{B9200D12-884E-43F0-B365-57917447071A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9200D12-884E-43F0-B365-57917447071A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9200D12-884E-43F0-B365-57917447071A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0774AC-476A-4359-97EA-CFAD79F8FC92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0774AC-476A-4359-97EA-CFAD79F8FC92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0774AC-476A-4359-97EA-CFAD79F8FC92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0774AC-476A-4359-97EA-CFAD79F8FC92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B0964A7-F46A-4164-82C9-FF4FB4CA4213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0964A7-F46A-4164-82C9-FF4FB4CA4213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B0964A7-F46A-4164-82C9-FF4FB4CA4213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B0964A7-F46A-4164-82C9-FF4FB4CA4213}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B942E5-535A-4C07-A5E5-55012BB3A847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B942E5-535A-4C07-A5E5-55012BB3A847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B942E5-535A-4C07-A5E5-55012BB3A847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B942E5-535A-4C07-A5E5-55012BB3A847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF80A9E2-B83D-444F-8CAF-DF074840701E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF80A9E2-B83D-444F-8CAF-DF074840701E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF80A9E2-B83D-444F-8CAF-DF074840701E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF80A9E2-B83D-444F-8CAF-DF074840701E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
