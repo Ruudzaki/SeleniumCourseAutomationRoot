@@ -10,13 +10,13 @@ namespace Automation.Core.Components
 {
     public abstract class FluentUi : IFluent
     {
-        private readonly IWebDriver _driver;
-        private readonly ILogger _logger;
+        public IWebDriver Driver { get; }
+        public ILogger Logger { get; }
 
         protected FluentUi(IWebDriver driver, ILogger logger)
         {
-            _driver = driver;
-            _logger = logger;
+            Driver = driver;
+            Logger = logger;
         }
 
         protected FluentUi(IWebDriver driver) 
@@ -25,7 +25,7 @@ namespace Automation.Core.Components
         public T ChangeContext<T>() 
         {
             var instance = Create<T>(null);
-            _logger.Debug($"instance of [{GetType().FullName}] created");
+            Logger.Debug($"instance of [{GetType().FullName}] created");
             return instance;
         }
 
@@ -36,21 +36,21 @@ namespace Automation.Core.Components
 
         public T ChangeContext<T>(string application)
         {
-            _driver.Navigate().GoToUrl(application);
-            _driver.Manage().Window.Maximize();
+            Driver.Navigate().GoToUrl(application);
+            Driver.Manage().Window.Maximize();
             return Create<T>(null);
         }
 
         public T ChangeContext<T>(string application, ILogger logger) {
-            _driver.Navigate().GoToUrl(application);
-            _driver.Manage().Window.Maximize();
+            Driver.Navigate().GoToUrl(application);
+            Driver.Manage().Window.Maximize();
             return Create<T>(logger);
         }
 
         private T Create<T>(ILogger logger)
         {
-            return logger == null ? (T) Activator.CreateInstance(typeof(T), new object[] { _driver }) 
-                                  : (T) Activator.CreateInstance(typeof(T), new object[] { _driver, logger});
+            return logger == null ? (T) Activator.CreateInstance(typeof(T), new object[] { Driver }) 
+                                  : (T) Activator.CreateInstance(typeof(T), new object[] { Driver, logger});
         }
     }
 }
