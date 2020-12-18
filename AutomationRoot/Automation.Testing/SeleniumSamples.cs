@@ -23,7 +23,8 @@ namespace Automation.Testing
     {
         // path to automation environment (web-drivers etc.)
         //private static readonly string TestBinaryPath = @"\\DESKTOP-S36JLV3\Projects\automation-env";
-        private static readonly string TestBinaryPath = @".";
+        private static readonly string TestBinaryPath = @"C:\repos\automation-env\web-drivers";
+        //private static readonly string TestBinaryPath = @".";
 
         [TestMethod]
         public void WebDriverSamples()
