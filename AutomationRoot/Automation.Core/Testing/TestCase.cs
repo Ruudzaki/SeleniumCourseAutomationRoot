@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Automation.Core.Logging;
+using Automation.Extensions.Components;
+using Automation.Extensions.Contracts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 
 namespace Automation.Core.Testing
 {
@@ -11,6 +14,10 @@ namespace Automation.Core.Testing
         private IDictionary<string, object> _testParams;
         private int _attempts;
         private ILogger _logger;
+
+        // properties
+        public bool Actual { get; private set; }
+        public IWebDriver Driver { get; private set; }
 
         protected TestCase()
         {
@@ -24,6 +31,8 @@ namespace Automation.Core.Testing
 
         public TestCase Execute()
         {
+            Driver = Get();
+
             for (int i = 0; i < _attempts; i++)
             {
                 try
@@ -33,6 +42,7 @@ namespace Automation.Core.Testing
                     {
                         break;
                     }
+
                     _logger.Debug($"{GetType()?.FullName} failed on attempt [{i + 1}]");
                 }
                 catch (NotImplementedException ex)
@@ -49,12 +59,14 @@ namespace Automation.Core.Testing
                 {
                     _logger.Debug(ex, ex.Message);
                 }
+                finally
+                {
+                    Driver?.Close();
+                    Driver?.Dispose();
+                }
             }
             return this;
         }
-
-        // properties
-        public bool Actual { get; private set; }
 
         // configuration
         public TestCase WithTestParams(IDictionary<string, object> testParams)
@@ -73,6 +85,25 @@ namespace Automation.Core.Testing
         {
             _logger = logger;
             return this;
+        }
+
+        // setup
+        private IWebDriver Get()
+        {
+            // constants
+            const string DRIVER = "driver";
+
+            // default
+            var driverParams = new DriverParams {Binaries = ".", Driver = "CHROME"};
+
+            //change driver if exist
+            if (_testParams?.ContainsKey(DRIVER) == true)
+            {
+                driverParams.Driver = $"{_testParams[DRIVER]}";
+            }
+
+            // create driver
+            return new WebDriverFactory(driverParams).Get();
         }
     }
 }

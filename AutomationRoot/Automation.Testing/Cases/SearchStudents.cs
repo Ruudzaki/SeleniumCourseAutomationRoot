@@ -16,15 +16,15 @@ namespace Automation.Testing.Cases
     {
         public override bool AutomationTest(IDictionary<string, object> testParams)
         {
-            //creating driver for this case
-            var driver = new WebDriverFactory(new DriverParams{Binaries = ".", Driver = "CHROME"}).Get();
+            //students to find
+            var keyword = $"{testParams["keyword"]}";
 
             //perform test case
-            return new StudentsUi(driver)
-                    .ChangeContext<StudentsUi>("https://gravitymvctestapplication.azurewebsites.net/Student")
-                    .FindByName("Alexander")
+            return new StudentsUi(Driver)
+                    .ChangeContext<StudentsUi>($"{testParams["application"]}")
+                    .FindByName(keyword)
                     .Students()
-                    .All(i => i.FirstName().Equals("Alexander") || i.LastName().Equals("Alexander"));
+                    .All(i => i.FirstName().Equals(keyword) || i.LastName().Equals(keyword));
         }
     }
 }
