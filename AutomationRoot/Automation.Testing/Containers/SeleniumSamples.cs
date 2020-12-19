@@ -15,7 +15,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 
-namespace Automation.Testing
+namespace Automation.Testing.Containers
 {
 
    [TestClass]

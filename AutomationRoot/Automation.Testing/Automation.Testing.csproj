@@ -22,4 +22,10 @@
     <PackageReference Include="Selenium.WebDriver.IEDriver" Version="3.150.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Automation.Api\Automation.Api.csproj" />
+    <ProjectReference Include="..\Automation.Core\Automation.Core.csproj" />
+    <ProjectReference Include="..\Automation.Framework.Ui\Automation.Framework.Ui.csproj" />
+  </ItemGroup>
+
 </Project>
