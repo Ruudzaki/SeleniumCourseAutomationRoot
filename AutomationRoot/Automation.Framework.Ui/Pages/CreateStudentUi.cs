@@ -2,6 +2,7 @@
 using Automation.Api.Pages;
 using Automation.Core.Components;
 using Automation.Core.Logging;
+using Automation.Extensions.Components;
 using OpenQA.Selenium;
 
 namespace Automation.Framework.Ui.Pages
@@ -43,12 +44,14 @@ namespace Automation.Framework.Ui.Pages
 
         public ICreateStudent FirstName(string firstName)
         {
-            throw new NotImplementedException();
+            Driver.GetEnabledElement(By.XPath("//input[@id='FirstMidName']")).SendKeys(firstName);
+            return this;
         }
 
         public ICreateStudent LastName(string lastName)
         {
-            throw new NotImplementedException();
+            Driver.GetEnabledElement(By.XPath("//input[@id='LastName']")).SendKeys(lastName);
+            return this;
         }
 
         public ICreateStudent EnrollmentDate(DateTime enrollmentDate)
