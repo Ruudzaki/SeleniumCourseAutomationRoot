@@ -12,43 +12,53 @@ namespace Automation.Extensions.Components
 {
     public class WebDriverFactory
     {
-
-
         private readonly DriverParams _driverParams;
 
-        public WebDriverFactory(string driverParamsJson) 
-            : this(LoadParams(driverParamsJson)) { }
+        public WebDriverFactory(string driverParamsJson)
+            : this(LoadParams(driverParamsJson))
+        {
+        }
 
         public WebDriverFactory(DriverParams driverParams)
         {
-            this._driverParams = driverParams;
+            _driverParams = driverParams;
             if (string.IsNullOrEmpty(driverParams.Binaries) || driverParams.Binaries == ".")
-            {
                 driverParams.Binaries = Environment.CurrentDirectory;
-            }
         }
 
 
         /// <summary>
-        /// generates web-driver based on input params
+        ///     generates web-driver based on input params
         /// </summary>
         /// <returns>web-driver instance</returns>
         public IWebDriver Get()
         {
-            if (!string.Equals(_driverParams.Source, "REMOTE", StringComparison.OrdinalIgnoreCase))
-            {
-                return GetDriver();
-            }
+            if (!string.Equals(_driverParams.Source, "REMOTE", StringComparison.OrdinalIgnoreCase)) return GetDriver();
 
             return GetRemoteDriver();
         }
 
         // local web-drivers
-        private IWebDriver GetChrome() => new ChromeDriver(_driverParams.Binaries);
-        private IWebDriver GetFireFox() => new FirefoxDriver(_driverParams.Binaries);
-        private IWebDriver GetInternetExplorer() => new InternetExplorerDriver(_driverParams.Binaries);
-        private IWebDriver GetEdge() => new EdgeDriver(_driverParams.Binaries);
-        
+        private IWebDriver GetChrome()
+        {
+            return new ChromeDriver(_driverParams.Binaries);
+        }
+
+        private IWebDriver GetFireFox()
+        {
+            return new FirefoxDriver(_driverParams.Binaries);
+        }
+
+        private IWebDriver GetInternetExplorer()
+        {
+            return new InternetExplorerDriver(_driverParams.Binaries);
+        }
+
+        private IWebDriver GetEdge()
+        {
+            return new EdgeDriver(_driverParams.Binaries);
+        }
+
 
         private IWebDriver GetDriver()
         {
@@ -63,14 +73,25 @@ namespace Automation.Extensions.Components
         }
 
         // remote web-drivers
-        private IWebDriver GetRemoteChrome() 
-            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new ChromeOptions());
-        private IWebDriver GetRemoteFireFox() 
-            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new FirefoxOptions());
-        private IWebDriver GetRemoteInternetExplorer() 
-            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new InternetExplorerOptions());
-        private IWebDriver GetRemoteEdge() 
-            => new RemoteWebDriver(new Uri(_driverParams.Binaries), new EdgeOptions());
+        private IWebDriver GetRemoteChrome()
+        {
+            return new RemoteWebDriver(new Uri(_driverParams.Binaries), new ChromeOptions());
+        }
+
+        private IWebDriver GetRemoteFireFox()
+        {
+            return new RemoteWebDriver(new Uri(_driverParams.Binaries), new FirefoxOptions());
+        }
+
+        private IWebDriver GetRemoteInternetExplorer()
+        {
+            return new RemoteWebDriver(new Uri(_driverParams.Binaries), new InternetExplorerOptions());
+        }
+
+        private IWebDriver GetRemoteEdge()
+        {
+            return new RemoteWebDriver(new Uri(_driverParams.Binaries), new EdgeOptions());
+        }
 
         private IWebDriver GetRemoteDriver()
         {
@@ -89,9 +110,7 @@ namespace Automation.Extensions.Components
         {
             // default
             if (string.IsNullOrEmpty(driverParamsJson))
-            {
                 return new DriverParams {Source = "Local", Driver = "Chrome", Binaries = "."};
-            }
 
             return JsonConvert.DeserializeObject<DriverParams>(driverParamsJson);
         }

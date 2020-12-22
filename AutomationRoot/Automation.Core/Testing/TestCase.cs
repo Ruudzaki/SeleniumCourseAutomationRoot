@@ -10,14 +10,12 @@ namespace Automation.Core.Testing
 {
     public abstract class TestCase
     {
-        // fields
-        private IDictionary<string, object> _testParams;
         private int _attempts;
+
         private ILogger _logger;
 
-        // properties
-        public bool Actual { get; private set; }
-        public IWebDriver Driver { get; private set; }
+        // fields
+        private IDictionary<string, object> _testParams;
 
         protected TestCase()
         {
@@ -26,6 +24,10 @@ namespace Automation.Core.Testing
             _logger = new TraceLogger();
         }
 
+        // properties
+        public bool Actual { get; private set; }
+        public IWebDriver Driver { get; private set; }
+
         // components
         public abstract bool AutomationTest(IDictionary<string, object> testParams);
 
@@ -33,15 +35,11 @@ namespace Automation.Core.Testing
         {
             Driver = Get();
 
-            for (int i = 0; i < _attempts; i++)
-            {
+            for (var i = 0; i < _attempts; i++)
                 try
                 {
                     Actual = AutomationTest(_testParams);
-                    if (Actual)
-                    {
-                        break;
-                    }
+                    if (Actual) break;
 
                     _logger.Debug($"{GetType()?.FullName} failed on attempt [{i + 1}]");
                 }
@@ -64,7 +62,7 @@ namespace Automation.Core.Testing
                     Driver?.Close();
                     Driver?.Dispose();
                 }
-            }
+
             return this;
         }
 
@@ -91,20 +89,16 @@ namespace Automation.Core.Testing
         private IWebDriver Get()
         {
             // constants
-            const string DRIVER = "driver";
+            const string driver = "driver";
 
             // default
             var driverParams = new DriverParams {Binaries = ".", Driver = "CHROME"};
 
             //change driver if exist
-            if (_testParams?.ContainsKey(DRIVER) == true)
-            {
-                driverParams.Driver = $"{_testParams[DRIVER]}";
-            }
+            if (_testParams?.ContainsKey(driver) == true) driverParams.Driver = $"{_testParams[driver]}";
 
             // create driver
             return new WebDriverFactory(driverParams).Get();
         }
     }
 }
-

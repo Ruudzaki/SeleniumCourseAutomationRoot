@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Automation.Api.Components;
 using Automation.Api.Pages;
 using Automation.Core.Components;
@@ -17,7 +14,8 @@ namespace Automation.Framework.Ui.Pages
         {
         }
 
-        public StudentsUi(IWebDriver driver, ILogger logger) : base(driver, logger) {
+        public StudentsUi(IWebDriver driver, ILogger logger) : base(driver, logger)
+        {
         }
 
         public IStudents Next()

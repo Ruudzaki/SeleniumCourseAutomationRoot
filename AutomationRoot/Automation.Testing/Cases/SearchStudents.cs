@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Automation.Api.Pages;
 using Automation.Core.Testing;
-using Automation.Extensions.Components;
-using Automation.Extensions.Contracts;
 using Automation.Framework.Ui.Pages;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Automation.Testing.Cases
 {
@@ -21,10 +14,10 @@ namespace Automation.Testing.Cases
 
             //perform test case
             return new StudentsUi(Driver)
-                    .ChangeContext<StudentsUi>($"{testParams["application"]}")
-                    .FindByName(keyword)
-                    .Students()
-                    .All(i => i.FirstName().Equals(keyword) || i.LastName().Equals(keyword));
+                .ChangeContext<StudentsUi>($"{testParams["application"]}")
+                .FindByName(keyword)
+                .Students()
+                .All(i => i.FirstName().Equals(keyword) || i.LastName().Equals(keyword));
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Internal;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 
@@ -25,8 +22,10 @@ namespace Automation.Extensions.Components
             return driver;
         }
 
-        public static IWebElement GetElement(this IWebDriver driver, By by) =>
-            GetElement(driver, by, TimeSpan.FromSeconds(15));
+        public static IWebElement GetElement(this IWebDriver driver, By by)
+        {
+            return GetElement(driver, by, TimeSpan.FromSeconds(15));
+        }
 
         public static IWebElement GetElement(this IWebDriver driver, By by, TimeSpan timeout)
         {
@@ -34,16 +33,21 @@ namespace Automation.Extensions.Components
             return wait.Until(d => d.FindElement(by));
         }
 
-        public static SelectElement AsSelect(this IWebElement element) => new SelectElement(element);
+        public static SelectElement AsSelect(this IWebElement element)
+        {
+            return new SelectElement(element);
+        }
 
-        public static ReadOnlyCollection<IWebElement> GetElements (this IWebDriver driver, By by, TimeSpan timeout)
+        public static ReadOnlyCollection<IWebElement> GetElements(this IWebDriver driver, By by, TimeSpan timeout)
         {
             var wait = new WebDriverWait(driver, timeout);
             return wait.Until(d => d.FindElements(by));
         }
 
-        public static ReadOnlyCollection<IWebElement> GetElements(this IWebDriver driver, By by) =>
-            GetElements(driver, by, TimeSpan.FromSeconds(15));
+        public static ReadOnlyCollection<IWebElement> GetElements(this IWebDriver driver, By by)
+        {
+            return GetElements(driver, by, TimeSpan.FromSeconds(15));
+        }
 
         public static IWebElement GetVisibleElement(this IWebDriver driver, By by, TimeSpan timeout)
         {
@@ -55,9 +59,13 @@ namespace Automation.Extensions.Components
             });
         }
 
-        public static IWebElement GetVisibleElement(this IWebDriver driver, By by) => GetVisibleElement(driver, by, TimeSpan.FromSeconds(15));
+        public static IWebElement GetVisibleElement(this IWebDriver driver, By by)
+        {
+            return GetVisibleElement(driver, by, TimeSpan.FromSeconds(15));
+        }
 
-        public static ReadOnlyCollection<IWebElement> GetVisibleElements(this IWebDriver driver, By by, TimeSpan timeout)
+        public static ReadOnlyCollection<IWebElement> GetVisibleElements(this IWebDriver driver, By by,
+            TimeSpan timeout)
         {
             var wait = new WebDriverWait(driver, timeout);
             return wait.Until(d =>
@@ -67,7 +75,10 @@ namespace Automation.Extensions.Components
             });
         }
 
-        public static ReadOnlyCollection<IWebElement> GetVisibleElements(this IWebDriver driver, By by) => GetVisibleElements(driver, by, TimeSpan.FromSeconds(15));
+        public static ReadOnlyCollection<IWebElement> GetVisibleElements(this IWebDriver driver, By by)
+        {
+            return GetVisibleElements(driver, by, TimeSpan.FromSeconds(15));
+        }
 
         public static IWebElement GetEnabledElement(this IWebDriver driver, By by, TimeSpan timeout)
         {
@@ -79,7 +90,10 @@ namespace Automation.Extensions.Components
             });
         }
 
-        public static IWebElement GetEnabledElement(this IWebDriver driver, By by) => GetEnabledElement(driver, by, TimeSpan.FromSeconds(15));
+        public static IWebElement GetEnabledElement(this IWebDriver driver, By by)
+        {
+            return GetEnabledElement(driver, by, TimeSpan.FromSeconds(15));
+        }
 
         public static IWebDriver VerticalWindowScroll(this IWebDriver driver, int scrollAmount)
         {
@@ -117,7 +131,7 @@ namespace Automation.Extensions.Components
         {
             var value = element.GetAttribute("value");
             element.SendKeys(Keys.End);
-            for (int i = 0; i < value.Length; i++)
+            for (var i = 0; i < value.Length; i++)
             {
                 element.SendKeys(Keys.Backspace);
                 Thread.Sleep(50);
@@ -134,9 +148,8 @@ namespace Automation.Extensions.Components
 
         public static IWebDriver SubmitForm(this IWebDriver driver, string id)
         {
-            ((IJavaScriptExecutor)driver).ExecuteScript($"document.forms[\"{id}\"].submit();");
+            ((IJavaScriptExecutor) driver).ExecuteScript($"document.forms[\"{id}\"].submit();");
             return driver;
         }
-
     }
 }
