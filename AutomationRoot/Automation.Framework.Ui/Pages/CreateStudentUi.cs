@@ -34,7 +34,8 @@ namespace Automation.Framework.Ui.Pages
 
         public IStudents Create()
         {
-            throw new NotImplementedException();
+            Driver.GetEnabledElement(By.XPath("//input[@type = 'submit']")).Click();
+            return new StudentsUi(Driver);
         }
 
         public IStudents BackToList()
@@ -56,7 +57,9 @@ namespace Automation.Framework.Ui.Pages
 
         public ICreateStudent EnrollmentDate(DateTime enrollmentDate)
         {
-            throw new NotImplementedException();
+            var script = $"document.getElementById('EnrollmentDate').setAttribute('value','{enrollmentDate.ToString("yyyy-MM-dd")}')";
+            ((IJavaScriptExecutor)Driver).ExecuteScript(script);
+            return this;
         }
     }
 }

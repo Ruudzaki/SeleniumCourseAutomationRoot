@@ -1,6 +1,6 @@
 ﻿namespace Automation.Api.Components
 {
-    public interface IStudent : IStudentDetails, IEntityActions
+    public interface IStudent : IPersonalDetails, IEntityActions
     {
     }
 }
