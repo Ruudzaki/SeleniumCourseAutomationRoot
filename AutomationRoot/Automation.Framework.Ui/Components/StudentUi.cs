@@ -72,7 +72,6 @@ namespace Automation.Framework.Ui.Components
             // parse date
             var dateString = dataRow.FindElement(By.XPath("./td[3]")).Text.Trim();
             DateTime.TryParse(dateString, out _enrollmentDate);
-
         }
     }
 }

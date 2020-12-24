@@ -8,13 +8,21 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Automation.Framework.RestApi.Components
 {
     public class StudentRestApi : FluentRestApi, IStudent
     {
-        public StudentRestApi(HttpClient httpClient) : base(httpClient)
+        private readonly JToken _dataRow;
+        private string _firstName;
+        private string _lastName;
+        private DateTime _enrollmentDate;
+
+        public StudentRestApi(HttpClient httpClient, JToken dataRow) : this(httpClient, new TraceLogger())
         {
+            _dataRow = dataRow;
+            Build(dataRow);
         }
 
         public StudentRestApi(HttpClient httpClient, ILogger logger) : base(httpClient, logger)
@@ -38,17 +46,22 @@ namespace Automation.Framework.RestApi.Components
 
         public DateTime EnrollmentDate()
         {
-            throw new NotImplementedException();
+            return _enrollmentDate;
         }
 
         public string FirstName()
         {
-            throw new NotImplementedException();
+            return _firstName;
         }
 
         public string LastName()
         {
-            throw new NotImplementedException();
+            return _lastName;
+        }
+
+        private void Build(JToken dataRow)
+        {
+
         }
     }
 }
