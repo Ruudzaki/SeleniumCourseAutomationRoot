@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Automation.Core.Logging;
 using Automation.Extensions.Components;
 using Automation.Extensions.Contracts;
@@ -27,15 +28,16 @@ namespace Automation.Core.Testing
         // properties
         public bool Actual { get; private set; }
         public IWebDriver Driver { get; private set; }
+        public HttpClient HttpClient { get; private set; }
 
         // components
         public abstract bool AutomationTest(IDictionary<string, object> testParams);
 
         public TestCase Execute()
         {
-            Driver = Get();
-
             for (var i = 0; i < _attempts; i++)
+            {
+                Setup();
                 try
                 {
                     Actual = AutomationTest(_testParams);
@@ -62,7 +64,7 @@ namespace Automation.Core.Testing
                     Driver?.Close();
                     Driver?.Dispose();
                 }
-
+            }
             return this;
         }
 
@@ -86,19 +88,32 @@ namespace Automation.Core.Testing
         }
 
         // setup
-        private IWebDriver Get()
+        private void Setup()
         {
             // constants
-            const string driver = "driver";
+            const string DRIVER = "driver";
 
             // default
             var driverParams = new DriverParams {Binaries = ".", Driver = "CHROME"};
 
             //change driver if exist
-            if (_testParams?.ContainsKey(driver) == true) driverParams.Driver = $"{_testParams[driver]}";
+
+            if (_testParams?.ContainsKey(DRIVER) == true)
+            {
+                driverParams.Driver = $"{_testParams[DRIVER]}";
+            }
+            else
+            {
+                _testParams[DRIVER] = string.Empty;
+            }
+            if ($"{_testParams[DRIVER]}".Equals("HTTP", StringComparison.OrdinalIgnoreCase))
+            {
+                HttpClient = new HttpClient();
+                return;
+            }
 
             // create driver
-            return new WebDriverFactory(driverParams).Get();
+            Driver = new WebDriverFactory(driverParams).Get();
         }
     }
 }

@@ -33,21 +33,34 @@ namespace Automation.Core.Components
         {
             Driver.Navigate().GoToUrl(application);
             Driver.Manage().Window.Maximize();
-            return Create<T>(null);
+            return Create<T>(null, null);
         }
 
         public override T ChangeContext<T>(string application, ILogger logger)
         {
             Driver.Navigate().GoToUrl(application);
             Driver.Manage().Window.Maximize();
-            return Create<T>(logger);
+            return Create<T>(null, logger);
+        }
+        public override T ChangeContext<T>(string type, string application)
+        {
+            var t = GetTypeByName(type);
+            Driver.Navigate().GoToUrl(application);
+            Driver.Manage().Window.Maximize();
+            return Create<T>(t, null);
         }
 
-        internal override T Create<T>(ILogger logger)
+        internal override T Create<T>(Type type, ILogger logger)
         {
+            if (type == null)
+            {
+                type = typeof(T);
+            }
+
             return logger == null
-                ? (T) Activator.CreateInstance(typeof(T), new object[] { Driver })
-                : (T) Activator.CreateInstance(typeof(T), new object[] { Driver, logger } );
+                ? (T) Activator.CreateInstance(type, new object[] { Driver })
+                : (T) Activator.CreateInstance(type, new object[] { Driver, logger } );
         }
+
     }
 }
