@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Automation.Core.Components
 {
-    class FluentRestApi : IFluent
+    class FluentRestApi : FluentBase
     {
-        protected FluentRestApi(HttpClient httpClient, ILogger logger)
+        protected FluentRestApi(HttpClient httpClient, ILogger logger) : base(logger)
         {
             HttpClient = httpClient;
-            Logger = logger;
         }
 
         protected FluentRestApi(HttpClient httpClient)
@@ -22,24 +21,18 @@ namespace Automation.Core.Components
         }
 
         public HttpClient HttpClient { get; }
-        public ILogger Logger { get; }
 
-        public T ChangeContext<T>()
+        public override T ChangeContext<T>(string application)
         {
             throw new NotImplementedException();
         }
 
-        public T ChangeContext<T>(ILogger logger)
+        public override T ChangeContext<T>(string application, ILogger logger)
         {
             throw new NotImplementedException();
         }
 
-        public T ChangeContext<T>(string application)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T ChangeContext<T>(string application, ILogger logger)
+        internal override T Create<T>(ILogger logger)
         {
             throw new NotImplementedException();
         }
