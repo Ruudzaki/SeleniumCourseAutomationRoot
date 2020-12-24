@@ -6,12 +6,12 @@ namespace Automation.Core.Components
 {
     public abstract class FluentUi : FluentBase
     {
-        protected FluentUi(IWebDriver driver, ILogger logger) : base(logger)
+        public FluentUi(IWebDriver driver, ILogger logger) : base(logger)
         {
             Driver = driver;
         }
 
-        protected FluentUi(IWebDriver driver)
+        public FluentUi(IWebDriver driver)
             : this(driver, new TraceLogger())
         {
         }
@@ -35,8 +35,8 @@ namespace Automation.Core.Components
         internal override T Create<T>(ILogger logger)
         {
             return logger == null
-                ? (T) Activator.CreateInstance(typeof(T), Driver)
-                : (T) Activator.CreateInstance(typeof(T), Driver, logger);
+                ? (T) Activator.CreateInstance(typeof(T), new object[] { Driver })
+                : (T) Activator.CreateInstance(typeof(T), new object[] { Driver, logger } );
         }
     }
 }
