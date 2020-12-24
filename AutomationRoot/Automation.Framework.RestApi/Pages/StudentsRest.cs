@@ -15,11 +15,13 @@ namespace Automation.Framework.RestApi.Pages
 {
     public class StudentsRest : FluentRestApi, IStudents
     {
-        public StudentsRest(HttpClient httpClient) : this(httpClient, new TraceLogger())
+        public StudentsRest(HttpClient httpClient) 
+            : this(httpClient, new TraceLogger())
         {
         }
 
-        public StudentsRest(HttpClient httpClient, ILogger logger) : base(httpClient, logger)
+        public StudentsRest(HttpClient httpClient, ILogger logger) 
+            : base(httpClient, logger)
         {
         }
 
@@ -66,7 +68,7 @@ namespace Automation.Framework.RestApi.Pages
                 return new IStudent[0];
             }
             var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            return JToken.Parse(responseBody).Select(i => new StudentRestApi(HttpClient, i));
+            return JToken.Parse(responseBody).Select(i => new StudentRest(HttpClient, i));
         }
     }
 }

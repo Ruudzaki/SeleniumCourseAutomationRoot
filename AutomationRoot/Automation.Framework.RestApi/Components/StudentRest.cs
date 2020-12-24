@@ -12,20 +12,20 @@ using Newtonsoft.Json.Linq;
 
 namespace Automation.Framework.RestApi.Components
 {
-    public class StudentRestApi : FluentRestApi, IStudent
+    public class StudentRest : FluentRestApi, IStudent
     {
         private readonly JToken _dataRow;
         private string _firstName;
         private string _lastName;
         private DateTime _enrollmentDate;
 
-        public StudentRestApi(HttpClient httpClient, JToken dataRow) : this(httpClient, new TraceLogger())
+        public StudentRest(HttpClient httpClient, JToken dataRow) : this(httpClient, new TraceLogger())
         {
             _dataRow = dataRow;
             Build(dataRow);
         }
 
-        public StudentRestApi(HttpClient httpClient, ILogger logger) : base(httpClient, logger)
+        public StudentRest(HttpClient httpClient, ILogger logger) : base(httpClient, logger)
         {
         }
 
@@ -61,7 +61,9 @@ namespace Automation.Framework.RestApi.Components
 
         private void Build(JToken dataRow)
         {
-
+            _firstName = $"{dataRow["firstMidName"]}";
+            _lastName = $"{dataRow["lastName"]}";
+            _enrollmentDate = DateTime.Parse($"{dataRow["enrollmentDate"]}");
         }
     }
 }

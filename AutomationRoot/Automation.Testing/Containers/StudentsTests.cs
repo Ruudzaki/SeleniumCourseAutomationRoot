@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using Automation.Framework.RestApi.Pages;
 using Automation.Testing.Cases;
@@ -58,7 +59,8 @@ namespace Automation.Testing.Containers
         [TestMethod]
         public void TempTest()
         {
-            var studentsRest = new StudentsRest(new HttpClient());
+            var studentsRest = new StudentsRest(new HttpClient()).Students();
+            var a = studentsRest.First().FirstName();
         }
     }
 }
