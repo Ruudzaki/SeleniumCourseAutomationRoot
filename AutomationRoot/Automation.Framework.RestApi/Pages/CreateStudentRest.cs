@@ -8,57 +8,73 @@ using Automation.Api.Components;
 using Automation.Api.Pages;
 using Automation.Core.Components;
 using Automation.Core.Logging;
+using Newtonsoft.Json;
 
 namespace Automation.Framework.RestApi.Pages
 {
     public class CreateStudentRest : FluentRest, ICreateStudent
     {
+        // constants
+        private const string F_NAME = "firstMidName";
+        private const string L_NAME = "lastName";
+        private const string E_DATE = "enrollmentDate";
+
+        private readonly IDictionary<string, object> _requestBody;
         public CreateStudentRest(HttpClient httpClient, ILogger logger) : base(httpClient, logger)
         {
+            _requestBody = new Dictionary<string, object>();
         }
 
-        public CreateStudentRest(HttpClient httpClient) : base(httpClient)
+        public CreateStudentRest(HttpClient httpClient) : this(httpClient, new TraceLogger())
         {
+            
         }
 
         public string FirstName()
         {
-            throw new NotImplementedException();
+            return _requestBody.ContainsKey(F_NAME) ? $"{_requestBody[F_NAME]}" : string.Empty;
         }
 
         public string LastName()
         {
-            throw new NotImplementedException();
+            return _requestBody.ContainsKey(L_NAME) ? $"{_requestBody[L_NAME]}" : string.Empty;
         }
 
         public DateTime EnrollmentDate()
         {
-            throw new NotImplementedException();
+            return _requestBody.ContainsKey(E_DATE) ? DateTime.Parse($"{_requestBody[E_DATE]}") : default;
         }
 
         public IStudents Create()
         {
-            throw new NotImplementedException();
+            var jsonRequest = JsonConvert.SerializeObject(_requestBody);
+            var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+            HttpClient.PostAsync("/api/Students", content).GetAwaiter().GetResult();
+
+            return new StudentsRest(HttpClient, Logger);
         }
 
         public IStudents BackToList()
         {
-            throw new NotImplementedException();
+            return new StudentsRest(HttpClient, Logger);
         }
 
         public ICreateStudent FirstName(string firstName)
         {
-            throw new NotImplementedException();
+            _requestBody[F_NAME] = firstName;
+            return this;
         }
 
         public ICreateStudent LastName(string lastName)
         {
-            throw new NotImplementedException();
+            _requestBody[L_NAME] = lastName;
+            return this;
         }
 
         public ICreateStudent EnrollmentDate(DateTime enrollmentDate)
         {
-            throw new NotImplementedException();
+            _requestBody[E_DATE] = enrollmentDate.ToString("yyyy-MM-ddThh:mm:ss");
+            return this;
         }
     }
 }
