@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using Automation.Core.Components;
 using Automation.Core.Logging;
 using Automation.Extensions.Components;
 using Automation.Extensions.Contracts;
@@ -85,6 +87,32 @@ namespace Automation.Core.Testing
         {
             _logger = logger;
             return this;
+        }
+
+        // factory
+        public IFluent CreateFluentApi(string type)
+        {
+            // extract type
+            var t = Utilities.GetTypeByName(type);
+
+            // extract constructors
+            var ctr = t.GetConstructors();
+
+            // setup conditions
+            var isFluent = typeof(FluentBase).IsAssignableFrom(t);
+            var isRest = isFluent && ctr.Any(i => i.GetParameters().Any(p => p.ParameterType == typeof(HttpClient)));
+            var isFront = isFluent && ctr.Any(i => i.GetParameters().Any(p => p.ParameterType == typeof(IWebDriver)));
+
+            // factoring
+            if (isRest)
+            {
+                return (IFluent)Activator.CreateInstance(t, new object[] { HttpClient, _logger });
+            }
+            else if (isFront)
+            {
+                return (IFluent)Activator.CreateInstance(t, new object[] { Driver, _logger });
+            }
+            throw new NotFoundException($"implementation of {type} was not found");
         }
 
         // setup

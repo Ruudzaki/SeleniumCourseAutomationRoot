@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Automation.Core.Components;
 using Automation.Core.Testing;
 using Automation.Framework.Ui.Pages;
 
@@ -13,7 +14,7 @@ namespace Automation.Testing.Cases
             var keyword = $"{testParams["keyword"]}";
 
             //perform test case
-            return new StudentsUi(Driver)
+            return new FluentUi(Driver)
                 .ChangeContext<StudentsUi>($"{testParams["application"]}")
                 .FindByName(keyword)
                 .Students()

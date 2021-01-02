@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using Automation.Core.Components;
 using Automation.Framework.RestApi.Pages;
 using Automation.Testing.Cases;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -59,7 +60,9 @@ namespace Automation.Testing.Containers
         [TestMethod]
         public void TempTest()
         {
-            var studentsRest = new StudentsRest(new HttpClient()).Students();
+            var studentsRest =
+                new FluentRestApi(new HttpClient()).ChangeContext<StudentsRest>(
+                    "https://gravitymvctestapplication.azurewebsites.net").Students();
             var a = studentsRest.First().FirstName();
         }
     }
