@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Automation.Core.Components
 {
-    public class FluentRestApi : FluentBase
+    public class FluentRest : FluentBase
     {
-        public FluentRestApi(HttpClient httpClient, ILogger logger) : base(logger)
+        public FluentRest(HttpClient httpClient, ILogger logger) : base(logger)
         {
             HttpClient = httpClient ?? new HttpClient();
         }
 
-        public FluentRestApi(HttpClient httpClient)
+        public FluentRest(HttpClient httpClient)
             : this(httpClient, new TraceLogger())
         {
         }

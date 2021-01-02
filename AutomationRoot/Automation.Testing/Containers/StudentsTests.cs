@@ -13,9 +13,23 @@ namespace Automation.Testing.Containers
     public class StudentsTests
     {
         [DataTestMethod]
+        //[DataRow(
+        //    "{" +
+        //    "'driver':'CHROME'," +
+        //    "'keyword':'Alexander'," +
+        //    "'application':'https://gravitymvctestapplication.azurewebsites.net/Student'," +
+        //    "'fluent':'Automation.Core.Components.FluentUi'," +
+        //    "'students':'Automation.Framework.Ui.Pages.StudentsUi'" +
+        //    "}")]
         [DataRow(
-            "{'driver':'CHROME','keyword':'Alexander','application':'https://gravitymvctestapplication.azurewebsites.net/Student'}")]
-        public void SearchStudentUiTest(string testParams)
+            "{" +
+            "'driver':'HTTP'," +
+            "'keyword':'Alexander'," +
+            "'application':'https://gravitymvctestapplication.azurewebsites.net'," +
+            "'fluent':'Automation.Core.Components.FluentRest'," +
+            "'students':'Automation.Framework.RestApi.Pages.StudentsRest'" +
+            "}")]
+        public void SearchStudentTest(string testParams)
         {
             //generate test-parameters
             var parameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(testParams);
@@ -57,13 +71,5 @@ namespace Automation.Testing.Containers
             Assert.IsTrue(actual);
         }
 
-        [TestMethod]
-        public void TempTest()
-        {
-            var studentsRest =
-                new FluentRestApi(new HttpClient()).ChangeContext<StudentsRest>(
-                    "https://gravitymvctestapplication.azurewebsites.net").Students();
-            var a = studentsRest.First().FirstName();
-        }
     }
 }

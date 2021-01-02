@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Automation.Framework.RestApi.Components
 {
-    public class StudentRest : FluentRestApi, IStudent
+    public class StudentRest : FluentRest, IStudent
     {
         private readonly JToken _dataRow;
         private string _firstName;

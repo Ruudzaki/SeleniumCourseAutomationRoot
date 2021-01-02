@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Automation.Api.Pages;
-using Automation.Core.Components;
 using Automation.Core.Testing;
-using Automation.Framework.Ui.Pages;
 
 namespace Automation.Testing.Cases
 {
@@ -13,10 +11,13 @@ namespace Automation.Testing.Cases
         {
             //students to find
             var keyword = $"{testParams["keyword"]}";
+            var fluent = $"{testParams["fluent"]}";
+            var students = $"{testParams["students"]}";
+
 
             //perform test case
-            return CreateFluentApi("Automation.Core.Components.FluentUi")
-                .ChangeContext<IStudents>("Automation.Framework.Ui.Pages.StudentsUi", $"{testParams["application"]}")
+            return CreateFluentApi(fluent)
+                .ChangeContext<IStudents>(students, $"{testParams["application"]}")
                 .FindByName(keyword)
                 .Students()
                 .All(i => i.FirstName().Equals(keyword) || i.LastName().Equals(keyword));
