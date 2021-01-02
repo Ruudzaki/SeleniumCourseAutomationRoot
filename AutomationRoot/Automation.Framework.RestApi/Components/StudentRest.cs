@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Automation.Framework.RestApi.Pages;
 using Newtonsoft.Json.Linq;
 
 namespace Automation.Framework.RestApi.Components
@@ -15,6 +16,7 @@ namespace Automation.Framework.RestApi.Components
     public class StudentRest : FluentRest, IStudent
     {
         private readonly JToken _dataRow;
+        private int _id;
         private string _firstName;
         private string _lastName;
         private DateTime _enrollmentDate;
@@ -36,7 +38,7 @@ namespace Automation.Framework.RestApi.Components
 
         public IStudentDetails Details()
         {
-            throw new NotImplementedException();
+            return new StudentDetailsRest(HttpClient, Logger, _id);
         }
 
         public object Edit()
@@ -64,6 +66,7 @@ namespace Automation.Framework.RestApi.Components
             _firstName = $"{dataRow["firstMidName"]}";
             _lastName = $"{dataRow["lastName"]}";
             _enrollmentDate = DateTime.Parse($"{dataRow["enrollmentDate"]}");
+            int.TryParse($"{dataRow["id"]}", out _id);
         }
     }
 }

@@ -13,14 +13,14 @@ namespace Automation.Testing.Containers
     public class StudentsTests
     {
         [DataTestMethod]
-        //[DataRow(
-        //    "{" +
-        //    "'driver':'CHROME'," +
-        //    "'keyword':'Alexander'," +
-        //    "'application':'https://gravitymvctestapplication.azurewebsites.net/Student'," +
-        //    "'fluent':'Automation.Core.Components.FluentUi'," +
-        //    "'students':'Automation.Framework.Ui.Pages.StudentsUi'" +
-        //    "}")]
+        [DataRow(
+            "{" +
+            "'driver':'CHROME'," +
+            "'keyword':'Alexander'," +
+            "'application':'https://gravitymvctestapplication.azurewebsites.net/Student'," +
+            "'fluent':'Automation.Core.Components.FluentUi'," +
+            "'students':'Automation.Framework.Ui.Pages.StudentsUi'" +
+            "}")]
         [DataRow(
             "{" +
             "'driver':'HTTP'," +
@@ -58,7 +58,21 @@ namespace Automation.Testing.Containers
 
         [DataTestMethod]
         [DataRow(
-            "{'driver':'CHROME','keyword':'Alexander','application':'https://gravitymvctestapplication.azurewebsites.net/Student'}")]
+            "{" +
+            "'driver':'CHROME'," +
+            "'keyword':'Alexander'," +
+            "'application':'https://gravitymvctestapplication.azurewebsites.net/Student'," +
+            "'fluent':'Automation.Core.Components.FluentUi'," +
+            "'students':'Automation.Framework.Ui.Pages.StudentsUi'" +
+            "}")]
+        [DataRow(
+            "{" +
+            "'driver':'HTTP'," +
+            "'keyword':'Alexander'," +
+            "'application':'https://gravitymvctestapplication.azurewebsites.net'," +
+            "'fluent':'Automation.Core.Components.FluentRest'," +
+            "'students':'Automation.Framework.RestApi.Pages.StudentsRest'" +
+            "}")]
         public void StudentDetailsTest(string testParams)
         {
             //generate test-parameters
@@ -70,6 +84,5 @@ namespace Automation.Testing.Containers
             // assert results 
             Assert.IsTrue(actual);
         }
-
     }
 }

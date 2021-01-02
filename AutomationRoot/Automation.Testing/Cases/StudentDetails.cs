@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Automation.Api.Pages;
 
 namespace Automation.Testing.Cases
 {
@@ -14,10 +15,12 @@ namespace Automation.Testing.Cases
         {
             //students to find
             var keyword = $"{testParams["keyword"]}";
+            var fluent = $"{testParams["fluent"]}";
+            var students = $"{testParams["students"]}";
 
             //perform test case
-            var student = new StudentsUi(Driver)
-                .ChangeContext<StudentsUi>($"{testParams["application"]}")
+            var student = CreateFluentApi(fluent)
+                .ChangeContext<IStudents>(students, $"{testParams["application"]}")
                 .FindByName(keyword)
                 .Students()
                 .First();
